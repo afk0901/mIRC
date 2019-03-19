@@ -1,6 +1,7 @@
 import React from 'react';
 import ChooseNick from "./components/ChooseNick";
 import {Switch, Route} from 'react-router-dom';
+import { socket } from './services/socketService';
 
 class App extends React.Component {
     componentDidMount() {
