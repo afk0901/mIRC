@@ -17,11 +17,18 @@ class ChatWindow extends React.Component {
         };
     }
     sendMessage(message) {
+        console.log("message");
         if (message === '') { return false; }
-        socket.emit('message', message);
+        socket.emit('sendmsg', {roomName: 'Clusterfuck', msg: message});
         this.setState({ message: '' });
     }
+
+    joinRoom() {
+        console.log("Joining room...");
+        socket.emit('joinroom', );
+    }
     render() {
+
         const { users } = this.props;
         const { messages, message } = this.state;
         return (
