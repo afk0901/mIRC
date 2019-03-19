@@ -4,7 +4,7 @@ import ChatWindow from './components/ChatWindow/ChatWindow';
 
 class App extends React.Component {
     componentDidMount() {
-        socket.on('users', userList => {
+        socket.on('connection', userList => {
             this._populateUserList(userList);
         });
     }
