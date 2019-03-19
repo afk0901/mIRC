@@ -24,10 +24,12 @@ ChooseNick.Title = () => (
     </h3>
 );
 
+
+
 ChooseNick.ChooseNick = () => (
     <div className="input-container">
         <input type="text" placeholder="Enter your nickname..." />
-        <button type="button" onClick={() => this.sendNickname('Siggi')}>Choose Nicname</button>
+        <button type="button" onClick={() => this.sendNickname()}>Choose Nicname</button>
     </div>
 ); 
 

@@ -1,0 +1,2 @@
+
+export const CHOOSE_NICKNAME = 'CHOOSE_NICKNAME';

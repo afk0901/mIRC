@@ -1,12 +1,23 @@
 import React from 'react';
 import { socket } from '../../services/socketService';
+import { connect } from 'react-redux';
 
 class ChatWindow extends React.Component {
     componentDidMount() {
         console.log(socket);
-        socket.on('message', message => {
+        console.log(socket.users);
+        socket.emit('adduser', 'siggi',function(available) {
+            if(available) {
+                console.log("your nick is available");
+            }
+            else {
+                console.log("your nick was not available");
+            }
+        })
+        socket.on('updatechat', message => {
             const { messages } = this.state;
             this.setState({ messages: [ ...messages, message ] });
+            
         });
     }
     constructor(props) {
@@ -27,6 +38,7 @@ class ChatWindow extends React.Component {
         console.log("Joining room...");
         socket.emit('joinroom', );
     }
+
     render() {
 
         const { users } = this.props;
@@ -69,4 +81,11 @@ ChatWindow.Users = props => (
     </div>
 );
 
-export default ChatWindow;
+const mapStateToProps = reduxStoreState => {
+    console.log(reduxStoreState);
+    return {
+
+    };
+}
+
+export default connect(mapStateToProps)(ChatWindow);
