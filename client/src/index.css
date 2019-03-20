@@ -56,6 +56,16 @@ code {
     border: dashed 1px black;
 }
 
+.chat-window .rooms {
+    position: absolute;
+    left: 0;
+    top: 40px;
+    padding: 20px;
+    width: 60px;
+    height: 100%;
+    border: dashed 1px red;
+}
+
 .chat-window .users .user {
     border-bottom: solid 1px black;
     border-top: solid 1px black;

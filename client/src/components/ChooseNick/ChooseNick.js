@@ -42,12 +42,10 @@ class ChooseNick extends React.Component {
             }
         });
 
-        socket.emit("users", function() {
-            
-        })
-        socket.on('userlist', listOfUsers => {
-            console.log("List of users!!: " + listOfUsers);
-        })
+        socket.emit("users", function() {})
+        // socket.on('userlist', listOfUsers => {
+        //     console.log("List of users!!: " + listOfUsers);
+        // })
         
             
         

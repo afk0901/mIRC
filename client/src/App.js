@@ -1,16 +1,22 @@
 import React from 'react';
 import ChooseNick from "./components/ChooseNick/ChooseNick";
 import ChatWindow from './components/ChatWindow/ChatWindow';
-import {Switch, Route} from 'react-router-dom';
 import { socket } from './services/socketService';
 
 class App extends React.Component {
     componentDidMount() {
-        socket.on('connection', userList => {
-            this._populateUserList(userList);
-            console.log(userList);
+        socket.emit("users", function() {
+            
         });
-    }
+        socket.on('userlist', listOfUsers => {
+            this._populateUserList(listOfUsers);
+            console.log("List of users!!: " + this.state.users);
+        })
+        // socket.on('connection', userList => {
+        //     this._populateUserList(userList);
+        //     console.log(userList);
+        // };
+    };
     _populateUserList(userList) {
         this.setState({
             users: userList

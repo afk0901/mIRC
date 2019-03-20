@@ -1,24 +1,17 @@
 import React from 'react';
 import { socket } from '../../services/socketService';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 class ChatWindow extends React.Component {
 
 
     componentDidMount() {
-        
+        socket.on('userlist', listOfUsers => {
+            console.log("List of users: " + listOfUsers);
+        })
         
         console.log(socket.users + " these are the users ");
-        socket.emit('adduser', 'siggi',function(available) {
-            if(available) {
-                console.log("your nick is available");
-            }
-            else {
-                console.log("your nick was not available");
-            }
-            console.log("Socket id is " + socket.id);
-        })
+        
         socket.on('updatechat', message => {
             const { messages } = this.state;
             this.setState({ messages: [ ...messages, message ] });
@@ -35,19 +28,23 @@ class ChatWindow extends React.Component {
         console.log(this.state);
     }
     sendMessage(message) {
-        console.log("message");
-        if (message === '') { return false; }
-        socket.emit('sendmsg', {roomName: 'Clusterfuck', msg: message});
-        this.setState({ message: '' });
+        console.log(this.props.nickName + " says: " + message);
+        console.log(this.state.messages);
+
+        // if (message === '') { return false; }
+        // socket.emit('sendmsg', {roomName: 'lobby', msg: message});
+        // this.setState({ message: '' });
     }
 
     joinRoom() {
         console.log("Joining room...");
-        socket.emit('joinroom', );
+        socket.emit('joinroom' );
     }
 
-    render() {
+    
 
+    render() {
+        console.log(this.props.users);
         const { users } = this.props;
         const { messages, message } = this.state;
         return (
@@ -55,9 +52,10 @@ class ChatWindow extends React.Component {
                 <ChatWindow.Title />
                 <ChatWindow.Messages messages={ messages } />
                 <ChatWindow.Users users={ users } />
+                <ChatWindow.Rooms />
                 <div className="input-container">
                     <input type="text" value={ message } onChange={e => this.setState({ message: e.target.value })} placeholder="Enter your message here..." />
-                    <Link to = {"/lobby"}><button  onClick={() => this.sendMessage(message)}>Send</button></Link>
+                    <button type="button"  onClick={() => this.sendMessage(message)}>Send</button>
                 </div>
             </div>
         );
@@ -83,15 +81,22 @@ ChatWindow.Messages = props => (
 );
 
 ChatWindow.Users = props => (
-    console.log("These are the props " + props),
+    
     <div className="users">
+    
+        {/* { props.users.map(u => 
+        <div key={ u } className="user">{ u }</div>) } */}
+    </div>
+);
+
+ChatWindow.Rooms = props => (
+    <div className="rooms">
     
         {/* { props.users.map(u => <div key={ u } className="user">{ u }</div>) } */}
     </div>
 );
 
 const mapStateToProps = reduxStoreState => {
-    console.log(reduxStoreState.user.nickName + " Inside this");
     return {
         nick: reduxStoreState.user.nickName
     };
