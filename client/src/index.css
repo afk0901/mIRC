@@ -145,3 +145,9 @@ code {
     animation: from-green-to-red 1s ease-in infinite alternate;
     color: green;
 }
+
+.chat-window .nicknameBox {
+    
+    width: 200px;
+    height: 200px;
+}

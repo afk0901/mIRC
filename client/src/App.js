@@ -1,5 +1,5 @@
 import React from 'react';
-import ChooseNick from "./components/ChooseNick";
+import ChooseNick from "./components/ChooseNick/ChooseNick";
 import {Switch, Route} from 'react-router-dom';
 import { socket } from './services/socketService';
 
@@ -24,9 +24,7 @@ class App extends React.Component {
         const { users } = this.state;
         return (
             <div className="container">
-                <Switch>
-                <Route exact path="/" component={ ChooseNick }/>
-                </Switch>
+                
             </div>
         );
     }
