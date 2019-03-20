@@ -54,7 +54,7 @@ class ChatWindow extends React.Component {
             <div className="chat-window">
                 <ChatWindow.Title />
                 <ChatWindow.Messages messages={ messages } />
-                {/* <ChatWindow.Users users={ users } /> */}
+                <ChatWindow.Users users={ users } />
                 <div className="input-container">
                     <input type="text" value={ message } onChange={e => this.setState({ message: e.target.value })} placeholder="Enter your message here..." />
                     <Link to = {"/lobby"}><button  onClick={() => this.sendMessage(message)}>Send</button></Link>
@@ -82,11 +82,13 @@ ChatWindow.Messages = props => (
     </div>
 );
 
-// ChatWindow.Users = props => (
-//     <div className="users">
-//         { props.users.map(u => <div key={ u } className="user">{ u }</div>) }
-//     </div>
-// );
+ChatWindow.Users = props => (
+    console.log("These are the props " + props),
+    <div className="users">
+    
+        {/* { props.users.map(u => <div key={ u } className="user">{ u }</div>) } */}
+    </div>
+);
 
 const mapStateToProps = reduxStoreState => {
     console.log(reduxStoreState.user.nickName + " Inside this");

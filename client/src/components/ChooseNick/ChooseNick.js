@@ -1,13 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { setNickName } from '../../actions/userActions';
+import { socket } from '../../services/socketService';
 
 
 class ChooseNick extends React.Component {
 
     
     componentDidMount() {
-        console.log(this.state);
+        socket.on('connection', userList => {
+            this._populateUserList(userList);
+            console.log(userList);
+        })
+      
         };
 
     constructor(props){
@@ -22,12 +27,22 @@ class ChooseNick extends React.Component {
         console.log(this.state.nickName);
     }
     onFormSubmit(e) {
-        console.log(this.state)
+        console.log("this is the nickname being sent", this.state)
         e.preventDefault();
 
         const { nickName } = this.state;
         const { setNickName } = this.props;
         setNickName({nickName});
+        console.log()
+        socket.emit('adduser', this.state.nickName,function(available) {
+            if(available) {
+                console.log("your nick is available");
+            }
+            else {
+                console.log("your nick was not available");
+            }
+            console.log("Socket id is " + socket.id);
+        })
         
     }
 
