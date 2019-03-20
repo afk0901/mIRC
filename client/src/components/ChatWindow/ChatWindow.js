@@ -52,7 +52,7 @@ class ChatWindow extends React.Component {
                 <ChatWindow.Title />
                 <ChatWindow.Messages messages={ messages } />
                 <ChatWindow.Users users={ users } />
-                <ChatWindow.Rooms />
+                {/* *<ChatWindow.Rooms /> */}
                 <div className="input-container">
                     <input type="text" value={ message } onChange={e => this.setState({ message: e.target.value })} placeholder="Enter your message here..." />
                     <button type="button"  onClick={() => this.sendMessage(message)}>Send</button>
