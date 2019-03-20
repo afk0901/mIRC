@@ -48,11 +48,6 @@ class ChooseNick extends React.Component {
         socket.on('userlist', listOfUsers => {
             console.log("List of users!!: " + listOfUsers);
         })
-        
-            
-        
-        
-        
     }
 
     render() {
