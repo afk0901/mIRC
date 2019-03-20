@@ -33,7 +33,6 @@ class ChooseNick extends React.Component {
         const { nickName } = this.state;
         const { setNickName } = this.props;
         setNickName({nickName});
-        console.log()
         socket.emit('adduser', this.state.nickName,function(available) {
             if(available) {
                 console.log("your nick is available");
@@ -41,8 +40,18 @@ class ChooseNick extends React.Component {
             else {
                 console.log("your nick was not available");
             }
-            console.log("Socket id is " + socket.id);
+        });
+
+        socket.emit("users", function() {
+            
         })
+        socket.on('userlist', listOfUsers => {
+            console.log("List of users!!: " + listOfUsers);
+        })
+        
+            
+        
+        
         
     }
 
