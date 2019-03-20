@@ -5,9 +5,10 @@ const initialNick = {
 }
 
 export default function (state = initialNick, action) {
-    console.log(action);
     switch(action.type) {
-        case CHOOSE_NICKNAME: return action.payload;
+        case CHOOSE_NICKNAME: 
+        console.log(action);
+        return action.payload;
         default: return state;
     }
 }

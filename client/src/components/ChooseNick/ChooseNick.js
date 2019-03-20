@@ -1,37 +1,74 @@
 import React from 'react';
+import { connect } from 'react-redux'
+import { setNickName } from '../../actions/userActions';
+import { socket } from '../../services/socketService';
 
 
 class ChooseNick extends React.Component {
 
+    
+    componentDidMount() {
+        socket.on('connection', userList => {
+            this._populateUserList(userList);
+            console.log(userList);
+        })
+      
+        };
 
-    constructor(props) {
+    constructor(props){
         super(props);
         this.state = {
-            nickname: ''
-        };
+            nickName: ''
+        }
     }
 
-    onNickChange(e) {
-        this.setState({ nickname: e.target.value });
+    onInput(e) {
+        this.setState ({ nickName: e.target.value });
+        console.log(this.state.nickName);
     }
+    onFormSubmit(e) {
+        console.log("this is the nickname being sent", this.state)
+        e.preventDefault();
 
-    sendNickname() {
-        console.log(this.state);
+        const { nickName } = this.state;
+        const { setNickName } = this.props;
+        setNickName({nickName});
+        socket.emit('adduser', this.state.nickName,function(available) {
+            if(available) {
+                console.log("your nick is available");
+            }
+            else {
+                console.log("your nick was not available");
+            }
+        });
 
+        socket.emit("users", function() {
+            
+        })
+        socket.on('userlist', listOfUsers => {
+            console.log("List of users!!: " + listOfUsers);
+        })
+        
+            
+        
+        
+        
     }
 
     render() {
-        const {nickname} = this.state;
-        return (
+        return(
             <div className="chat-window">
-                <ChooseNick.Title />
-                <div className="nicknameBox">
-                    <input type="text" value={nickname} onChange={e => this.onNickChange(e)} />
-                    <button type="button" onClick={() => this.sendNickname()}>Choose Nickname</button>
-                </div>
+            <ChooseNick.Title />
+            
+            <div className='nickContainer'>
+                <input type="text" value  = {this.state.nickname} onChange={e => this.onInput(e)} placeholder="Enter your nickname.." />
+                <button type="button" onClick = {e => this.onFormSubmit(e)}>Choose Nickname</button>
+            </div>
+           
             </div>
         )
     }
+    
 }
 
 ChooseNick.Title = () => (
@@ -48,5 +85,19 @@ ChooseNick.Title = () => (
 
 
 
-export default ChooseNick;
+ChooseNick.ChooseNick = () => (
+    <div className='nickContainer'>
+        <input type="text" onChange={e => ChooseNick.this.setState({ nickName: e.target.value })} placeholder="Enter your nickname..." />
+        <button type="button" onClick={() => this.sendNickname()}>Choose Nickname</button>
+    </div>
+); 
+
+const mapStateToProps = reduxStoreState => {
+    
+    return {
+
+    };
+};
+
+export default connect(mapStateToProps, { setNickName })(ChooseNick);
 

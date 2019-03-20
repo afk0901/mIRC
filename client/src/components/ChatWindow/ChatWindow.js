@@ -1,11 +1,15 @@
 import React from 'react';
 import { socket } from '../../services/socketService';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class ChatWindow extends React.Component {
+
+
     componentDidMount() {
-        console.log(socket);
-        console.log(socket.users);
+        
+        
+        console.log(socket.users + " these are the users ");
         socket.emit('adduser', 'siggi',function(available) {
             if(available) {
                 console.log("your nick is available");
@@ -13,6 +17,7 @@ class ChatWindow extends React.Component {
             else {
                 console.log("your nick was not available");
             }
+            console.log("Socket id is " + socket.id);
         })
         socket.on('updatechat', message => {
             const { messages } = this.state;
@@ -24,8 +29,10 @@ class ChatWindow extends React.Component {
         super(props);
         this.state = {
             messages: [], /* List of all messages within the public lobby */
-            message: '' /* Current message */
+            message: '' ,/* Current message */
+            nick: props
         };
+        console.log(this.state);
     }
     sendMessage(message) {
         console.log("message");
@@ -51,7 +58,7 @@ class ChatWindow extends React.Component {
                 <ChatWindow.Users users={ users } />
                 <div className="input-container">
                     <input type="text" value={ message } onChange={e => this.setState({ message: e.target.value })} placeholder="Enter your message here..." />
-                    <button type="button" onClick={() => this.sendMessage(message)}>Send</button>
+                    <Link to = {"/lobby"}><button  onClick={() => this.sendMessage(message)}>Send</button></Link>
                 </div>
             </div>
         );
@@ -77,15 +84,17 @@ ChatWindow.Messages = props => (
 );
 
 ChatWindow.Users = props => (
+    console.log("These are the props " + props),
     <div className="users">
-        { props.users.map(u => <div key={ u } className="user">{ u }</div>) }
+    
+        {/* { props.users.map(u => <div key={ u } className="user">{ u }</div>) } */}
     </div>
 );
 
 const mapStateToProps = reduxStoreState => {
-    console.log(reduxStoreState);
+    console.log(reduxStoreState.user.nickName + " Inside this");
     return {
-
+        nick: reduxStoreState.user.nickName
     };
 }
 

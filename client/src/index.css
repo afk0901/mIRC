@@ -17,6 +17,11 @@ code {
     margin: 0 auto;
     width: 1196px;
 }
+.nickContainer {
+    margin: auto;
+    width: 50%;
+    
+}
 
 .input-large {
     padding: 10px;
