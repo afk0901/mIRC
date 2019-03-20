@@ -7,21 +7,31 @@ class App extends React.Component {
     componentDidMount() {
         socket.emit("users", function() {
             
-        });
-        socket.on('userlist', listOfUsers => {
-            this._populateUserList(listOfUsers);
-            console.log("List of users!!: " + this.state.users);
         })
-        // socket.on('connection', userList => {
-        //     this._populateUserList(userList);
-        //     console.log(userList);
-        // };
-    };
-    _populateUserList(userList) {
-        this.setState({
-            users: userList
-        });
+
+        
+        socket.on('updateusers', function() {
+            /*socket.emit("users", function() {
+            
+            })
+
+            socket.on('userlist', listOfUsers => {
+                this.setState({
+                    users: listOfUsers
+                });
+
+        })*/
+        console.log("UPDATEUSER!");
+    })
+
+        socket.on('userlist', listOfUsers => {
+            this.setState({
+                users: listOfUsers
+            });
+            console.log("List of users!!: " + listOfUsers);
+        })
     }
+
     constructor(props) {
         super(props);
         this.state = {
@@ -29,12 +39,13 @@ class App extends React.Component {
         };
     }
     render() {
-        const { users } = this.state;
+        const users = this.state.users;
+        console.log("MYUSERS: "+ users);
         // console.log("app users" + users);
         return (
             <div>
                <ChooseNick />
-               <ChatWindow userList = {users} />
+               <ChatWindow users = {users} />
             </div>
         );
     }

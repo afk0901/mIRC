@@ -10,7 +10,6 @@ class ChatWindow extends React.Component {
             console.log("List of users: " + listOfUsers);
         })
         
-        console.log(socket.users + " these are the users ");
         
         socket.on('updatechat', message => {
             const { messages } = this.state;
@@ -25,7 +24,6 @@ class ChatWindow extends React.Component {
             message: '' ,/* Current message */
             nick: props
         };
-        console.log(this.state);
     }
     sendMessage(message) {
         console.log(this.props.nickName + " says: " + message);
@@ -47,6 +45,8 @@ class ChatWindow extends React.Component {
         console.log(this.props.users);
         const { users } = this.props;
         const { messages, message } = this.state;
+        console.log("PROPS "+this.props.users);
+        
         return (
             <div className="chat-window">
                 <ChatWindow.Title />
@@ -81,18 +81,8 @@ ChatWindow.Messages = props => (
 );
 
 ChatWindow.Users = props => (
-    
     <div className="users">
-    
-        {/* { props.users.map(u => 
-        <div key={ u } className="user">{ u }</div>) } */}
-    </div>
-);
-
-ChatWindow.Rooms = props => (
-    <div className="rooms">
-    
-        {/* { props.users.map(u => <div key={ u } className="user">{ u }</div>) } */}
+        { props.users.map(u => <div key={ u } className="user">{ u }</div>) }
     </div>
 );
 
